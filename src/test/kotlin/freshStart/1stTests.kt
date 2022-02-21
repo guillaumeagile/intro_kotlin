@@ -2,6 +2,7 @@ package freshStart
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.comparables.shouldBeLessThan
+import io.kotest.matchers.doubles.shouldBeExactly
 import io.kotest.matchers.ints.exactly
 import io.kotest.matchers.ints.shouldBeGreaterThan
 import io.kotest.matchers.shouldBe
@@ -14,18 +15,18 @@ class `1stTests` : StringSpec({
     }
 
     "val vs const val" {
-        val valeur = "7"
-       //  valeur++
+        var valeur = 7
+        valeur++ shouldBe 8
 
     }
 
 
 
     "Typage implicite" {
-        val valeur = 7.0
+        val valeur: Any = 7.0
         valeur shouldBe 7
-        // valeur shouldBeExactly  (7.0)
-        //(valeur !is Double) shouldBe false    -> try with Any
+      //   valeur shouldBeExactly  (7.0)
+        (valeur !is Double) shouldBe false   // -> try with Any
     }
 
 
@@ -33,7 +34,7 @@ class `1stTests` : StringSpec({
 
 
     "Smart cast" {
-        val valeur : Any = 7
+        val valeur : Any = "7"
         if (valeur is String)
          valeur shouldBe "7"
        // else
@@ -49,13 +50,13 @@ class `1stTests` : StringSpec({
         val valeur =  7
         val label = "resultat : "
 
-        (label + valeur).shouldBeTypeOf<Any>()
-        //(valeur + label) shouldBe typeOf<String>()
+        (label + valeur).shouldBeTypeOf<String>()
+     //   (valeur + label) shouldBeTypeOf<String>()
 
     }
 
     "When"    {   // https://kotlinlang.org/docs/control-flow.html#when-expression
-        val age = 19
+        val age = 1
         when (age) {
             1 -> age shouldBe  1
             in 1..18 ->  age shouldBeLessThan   19

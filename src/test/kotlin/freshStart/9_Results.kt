@@ -7,7 +7,7 @@ import io.kotest.matchers.shouldBe
 
 class `9_Results` : StringSpec({
     "Result is better than try catch"{
-        val res = echoString("ok")
+        val res = echoString("")
         res shouldBeSuccess "ok"
     }
 
@@ -16,15 +16,17 @@ class `9_Results` : StringSpec({
         val output = res.fold(
             onSuccess = {
                 ("$it is not null")
+            },
+            onFailure = {
+                ("${it.message}")
             }
-        ) {
-            ("${it.message}")
-        }
+        )
+
         output shouldBe "ok is not null"
     }
 
     "Result then"{
-        val res = echoString("ok")
+        val res = echoString("KO")
         val finish = res.flatMap { it ->
             if (it == "ok")
                 Result.success("validated $it")

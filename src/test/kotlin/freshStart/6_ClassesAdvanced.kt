@@ -12,7 +12,6 @@ class `6_ClassesAdvanced` : StringSpec({
         sut.DoncJePense() shouldBe "moi penser à toi"
     }
 
-
     "interface power!"{
         val original = JeSuis("moi")
         val sut: JExiste = JeSuisToujours(original)
@@ -87,7 +86,7 @@ class Delegate {
 
 
 class JeSuisToujours(autre: JeSuis) : JExiste by autre {
-    //override
+    override fun DoncJePense(): String = "toc"
 }
 
 

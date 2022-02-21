@@ -7,17 +7,17 @@ class `2_NoNullsAllowed` : StringSpec({
 
 
     "cheh" {
-        var obj = null
+        val obj : Any? = null
         obj shouldBe null
         //  val valeur : Any
-        //  valeur shouldNotBe null
+      //    valeur shouldNotBe null
 
         lateinit var tableau: Array<Int>
         tableau shouldBe null
     }
 
     "safe call"{
-        var nullable: Int? = 1
+        var nullable: Int? = null
         // nullable = null
         nullable shouldBe null
         (nullable ?: 1) shouldBe 1
@@ -30,17 +30,17 @@ class `2_NoNullsAllowed` : StringSpec({
         val first = Node(1, next = { second })
         third = Node(3, next = { first })
 
-        third.next().value shouldBe 1
-        third.next().value shouldBe 1
+     //   third.next().value shouldBe 1
+            //   third.next().value shouldBe 1
 
-/*
+
         third = Node(3, next = { null })
         third.next()?.value shouldBe null
         third.next()!!.value shouldBe null
- */
+
     }
 
 })
 
-class Node<T>(val value: T, val next: () -> Node<T>)
+class Node<T>(val value: T, val next: () -> Node<T>?)
 // class Node<T>(val value: T, val next: () -> Node<T>?)

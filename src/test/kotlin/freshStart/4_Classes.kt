@@ -24,10 +24,11 @@ class `4_ClassesShould` : StringSpec({
 
     "class with anonymous objects inside and companions"{
         val c = C()
-        val obj = c.getObject()
+        val obj= c.getObject()
         //obj.
 
-        //C.
+       val cp = C.create()
+        cp.getObject().x shouldBe "x"
     }
 
     "be constructible" {
@@ -42,7 +43,7 @@ class `4_ClassesShould` : StringSpec({
         val maSousClasse = MaSousClasse(autreProp = 8)
         maSousClasse.uneProp shouldBe true
         maSousClasse.autreProp shouldBe 8
-        // maSousClasse.tardiveProp shouldBe "oo"
+         maSousClasse.tardiveProp shouldBe "oo"
         maSousClasse.getterProp shouldBe "valeur"
     }
 
@@ -53,7 +54,7 @@ class `4_ClassesShould` : StringSpec({
         sut.i shouldBe sut0.i
         sut.b shouldBe sut0.b
         sut.liste shouldContain 1
-        // sut0 shouldBe sut
+         sut0 shouldBe sut
     }
 
     "be extensible"{
@@ -65,7 +66,7 @@ class `4_ClassesShould` : StringSpec({
 
 })
 
-class MonAutreClasse(val i: Int, val b: Boolean) {
+data class MonAutreClasse(val i: Int, val b: Boolean) {
     var liste: MutableList<Int>
 
     constructor(valI: String, valB: String) : this(valI.toInt(), valB.toBoolean()) {
@@ -86,6 +87,7 @@ object Singleton {
         get() = "localhost"
 }
 
+
 open class MaClasse {
     var uneProp = true
 }
@@ -96,14 +98,17 @@ class MaSousClasse(val autreProp: Int) : MaClasse() {
     val getterProp: String
         get() = "valeur"
 }
+interface Iqqchose {
+    val x: String
+}
 
 class C {
-    // The return type is Any. x is not accessible
-    fun getObject() = object {
-        val x: String = "x"
+    // The return type is Iqqchose. x is accessible
+    fun getObject() = object : Iqqchose {
+        override val x: String = "x"
     }
 
-    companion object WhateverTheName {
+    companion object  {
         fun create(): C {
             return C()
         }

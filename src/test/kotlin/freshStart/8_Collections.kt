@@ -11,6 +11,7 @@ class `8_Collections` : StringSpec({
             "catfish", "water",
             "tulips", "blue paint"
         )
+      //  shoppingList[1] = "bottle of water"
 
         val shoppingListMutable = mutableListOf(
             "catfish", "water",
@@ -18,6 +19,7 @@ class `8_Collections` : StringSpec({
         )
         shoppingListMutable[1] = "bottle of water"
         shoppingListMutable.add("bucket")
+     //   shoppingListMutable.to
 
     }
 
@@ -61,7 +63,7 @@ class `8_Collections` : StringSpec({
         iceCreamInventorySum.entries.first().key shouldBe "Chocolate"
 
         //filters
-        //val iceCreamInventorySumFilt (value > 4 )
+        val iceCreamInventorySumFilt = shipments.filter { (it.second> 4)   }
 /*
         val asStrings = iceCreamInventorySumFilt.map { (flavor, qty) -> "$qty tubs of $flavor" }
         asStrings shouldHaveSize 3

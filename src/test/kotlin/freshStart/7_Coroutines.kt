@@ -11,6 +11,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Semaphore
 
@@ -33,9 +34,8 @@ class `7_Coroutines` : StringSpec({
         var result: Sequence<Int>? = null
         val sut = async { result = maClasse.nonblockingRunningCall() }  //launch
         result shouldBe null
-        sut.start()
-        result shouldBe null
-        delay(100)  // on peut faire mieux
+        sut.join()
+        // on peut faire mieux
         result shouldNotBe null
     }
 
@@ -46,11 +46,12 @@ class `7_Coroutines` : StringSpec({
         result shouldBe null
         sut.await()
         result shouldNotBe null
+        result!!.toList()
     }
 
     "go with the flows"{
         val maClasse = MaClasse()
-        launch {
+        launch( ) {
             maClasse.nonblockingLongRunningCall().collect { println("I'm not blocked either $it") }
         }
         maClasse.nonblockingLongRunningCall().collect { println("I'm not blocked  $it") }
@@ -59,7 +60,7 @@ class `7_Coroutines` : StringSpec({
     "synch the flow"{
         val maClasse = MaClasse()
         val semaphore = Semaphore(1, 1)
-        // semaphore.release()
+        semaphore.release()
         maClasse.nonblockingSyncRunningCall(semaphore).collect {
             println("I'm released  $it");
             semaphore.release()  // release the next one
@@ -87,12 +88,10 @@ class `7_Coroutines` : StringSpec({
         //given
         var res = emptyList<String>()
         //when
-
         val defferedRes1 = async { maClasse.longRunningCall(res) }
         val defferedRes2 = async { maClasse.longRunningCallHello(res) }
 
         val finalRes1 = defferedRes1.await().plus("Hello,")
-
         val finalRes2 = defferedRes2.await() + defferedRes1.await()
 
         //then
@@ -127,8 +126,6 @@ class `7_Coroutines` : StringSpec({
         val finalRes = awaitAllResult.flatten()
         finalRes shouldHaveSize 6
     }
-
-
 })
 
 
