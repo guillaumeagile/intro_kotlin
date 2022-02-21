@@ -10,7 +10,8 @@ class `4_ClassesShould` : StringSpec({
         val maClasse = MaClasse()
 
         (maClasse is MaClasse ) shouldBe true
-        maClasse.uneProp shouldBe true
+
+        maClasse.uneProp shouldBe false
 
         maClasse.uneProp = false
 
