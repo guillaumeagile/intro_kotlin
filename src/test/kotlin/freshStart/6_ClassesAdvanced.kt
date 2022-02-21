@@ -34,8 +34,25 @@ class `6_ClassesAdvanced` : StringSpec({
         sut.lazyProp shouldBe "hello"
         sut.lazyInitialized shouldBe true
     }
+
+
+    "Generics of course"{
+        // https://play.kotlinlang.org/byExample/01_introduction/06_Generics
+        val sut = MutableStack(1, 2, 3)
+        sut.pop() shouldBe 3
+
+    }
+
+    "Generic function"{
+        val sut = mutableStackOf("1", "2", "3")
+        sut.pop() shouldBe "3"
+
+    }
+
+
 })
 
+fun <E> mutableStackOf(vararg elements: E) = MutableStack(*elements)
 
 interface JExiste {
     fun DoncJePense(): String
@@ -71,4 +88,22 @@ class Delegate {
 
 class JeSuisToujours(autre: JeSuis) : JExiste by autre {
     //override
+}
+
+
+class MutableStack<E>(vararg items: E) {              // 1
+
+    private val elements = items.toMutableList()
+
+    fun push(element: E) = elements.add(element)        // 2
+
+    fun peek(): E = elements.last()                     // 3
+
+    fun pop(): E = elements.removeAt(elements.size - 1)
+
+    fun isEmpty() = elements.isEmpty()
+
+    fun size() = elements.size
+
+    override fun toString() = "MutableStack(${elements.joinToString()})"
 }

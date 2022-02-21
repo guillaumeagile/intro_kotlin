@@ -3,7 +3,6 @@ package freshStart
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.shouldHave
 
 class `4_ClassesShould` : StringSpec({
 
@@ -53,27 +52,33 @@ class `4_ClassesShould` : StringSpec({
 
         sut.i shouldBe sut0.i
         sut.b shouldBe sut0.b
-        sut.liste shouldContain  1
-       // sut0 shouldBe sut
+        sut.liste shouldContain 1
+        // sut0 shouldBe sut
+    }
+
+    "be extensible"{
+        val sut = MonAutreClasse("1", "true")
+        val actual = sut.faitAutreChose()
+        actual shouldBe 2
     }
 
 
-    "Generics of course"{
-
-    }
 })
 
- class MonAutreClasse(val i: Int, val b: Boolean) {
+class MonAutreClasse(val i: Int, val b: Boolean) {
     var liste: MutableList<Int>
-    constructor(valI: String, valB : String) : this (valI.toInt(), valB.toBoolean())
-    {
+
+    constructor(valI: String, valB: String) : this(valI.toInt(), valB.toBoolean()) {
         liste.add(this.i)
     }
 
-     init {
-         liste = mutableListOf()
-     }
+    init {
+        liste = mutableListOf()
+    }
+}
 
+private fun MonAutreClasse.faitAutreChose(): Int {
+    return this.i + 1
 }
 
 object Singleton {
