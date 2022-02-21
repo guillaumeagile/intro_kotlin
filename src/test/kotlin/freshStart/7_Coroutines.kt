@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Semaphore
 
-class `6_Coroutines` : StringSpec({
+class `7_Coroutines` : StringSpec({
 
     "normal functions are blocking"{
         val maClasse = MaClasse()
@@ -182,9 +182,9 @@ class MaClasse() {
         input.add("Hello,")
     }
 
-    suspend fun longRunningCallHello3()  : List<String> {
+    suspend fun longRunningCallHello3(): List<String> {
         delay(10)
-       return listOf("Hello,", "world")
+        return listOf("Hello,", "world")
     }
 
 }
