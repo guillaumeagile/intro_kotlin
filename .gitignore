@@ -30,3 +30,5 @@ spec_failures
 hs_err_pid*
 
 .idea/*
+bin/
+**/.DS_Store
